@@ -23,6 +23,7 @@ if __name__ == "__main__":
             break
         data_to_insert.append(
             {
+                u"timestamp": datetime.datetime.timestamp(datetime.datetime.strptime(data[i][0],"%m/%d/%Y %X")),
                 u"nama_kader": data[i][1], 
                 u"id":data[i][2], 
                 u"nama_pasien":data[i][3], 

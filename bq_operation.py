@@ -26,6 +26,7 @@ def create_table(table_id):
     table = bigquery.Table(table_id)
 
     schema = [
+        bigquery.SchemaField("timestamp","TIMESTAMP",mode="REQUIRED"),
         bigquery.SchemaField("nama_kader","STRING", mode="REQUIRED"),
         bigquery.SchemaField("id","STRING", mode="REQUIRED"),
         bigquery.SchemaField("nama_pasien","STRING", mode="REQUIRED"),
@@ -93,6 +94,6 @@ def delete_table(table_id):
     client.delete_table(table_id, not_found_ok=True)
     print("Delete table '{}'",format(table_id))
 
-# if __name__ == "__main__":
-#     table_id = "experiment-328903.np_prima_dataset.np_prima_table"
-#     delete_table(table_id)
+if __name__ == "__main__":
+    table_id = "experiment-328903.np_prima_dataset.np_prima_table"
+    create_table(table_id)
