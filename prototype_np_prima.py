@@ -33,8 +33,9 @@ if __name__ == "__main__":
                 u"jenis_kelamin": data[i][7],
             }
         )
-    
+
     print("Found {} rows to Insert".format(len(data_to_insert)))
+    data_to_insert = list(reversed(data_to_insert))
 
     dataset_id = "experiment-328903.np_prima_dataset"
     table_id = "experiment-328903.np_prima_dataset.np_prima_table"
