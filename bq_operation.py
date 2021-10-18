@@ -1,10 +1,18 @@
 from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
+from google.oauth2 import service_account
+
+key_path="credentials.json"
+
+credentials = service_account.Credentials.from_service_account_file(
+    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+)
+
 
 def create_dataset(dataset_id):
     print("Creating dataset {}".format(dataset_id))
 
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     dataset = bigquery.Dataset(dataset_id)
     dataset.location = 'asia-southeast2'
     dataset = client.create_dataset(dataset, timeout=30)
@@ -14,7 +22,7 @@ def create_dataset(dataset_id):
 def create_table(table_id):
     print("Creating table {}".format(table_id))
 
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     table = bigquery.Table(table_id)
 
     schema = [
@@ -32,7 +40,8 @@ def create_table(table_id):
     print("Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id))
 
 def check_dataset_exist(dataset_id):
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
+
     try:
         client.get_dataset(dataset_id)  # Make an API request.
         print("Dataset {} already exists".format(dataset_id))
@@ -42,7 +51,8 @@ def check_dataset_exist(dataset_id):
         return False
 
 def check_table_exist(table_id):
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
+
     try:
         client.get_table(table_id)  # Make an API request.
         print("Table {} already exists.".format(table_id))
@@ -52,7 +62,8 @@ def check_table_exist(table_id):
         return False
 
 def insert_to_table(dataset_id, table_id, data_to_insert):
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
+
     print("Preparing...")
     print("====================================================")
 
@@ -77,7 +88,7 @@ def insert_to_table(dataset_id, table_id, data_to_insert):
         print("Encountered errors while inserting rows: {}".format(errors))
 
 def delete_table(table_id):
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
     client.delete_table(table_id, not_found_ok=True)
     print("Delete table '{}'",format(table_id))
