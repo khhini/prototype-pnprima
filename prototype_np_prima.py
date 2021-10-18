@@ -3,7 +3,7 @@ import datetime
 from bq_operation import insert_to_table
 
 if __name__ == "__main__":
-    run_interfal = 60 # in minutes
+    run_interfal = 1 # in minutes
 
     last_run = datetime.datetime.now() - datetime.timedelta(minutes=run_interfal)
 

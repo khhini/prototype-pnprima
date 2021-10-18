@@ -1,6 +1,7 @@
 from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
 from google.oauth2 import service_account
+import time
 
 key_path="credentials.json"
 
@@ -16,7 +17,6 @@ def create_dataset(dataset_id):
     dataset = bigquery.Dataset(dataset_id)
     dataset.location = 'asia-southeast2'
     dataset = client.create_dataset(dataset, timeout=30)
-
     print("Created dataset {}.{}".format(client.project, dataset.dataset_id))
 
 def create_table(table_id):
@@ -36,7 +36,7 @@ def create_table(table_id):
       ]
       
     table = bigquery.Table(table_id, schema=schema)
-    table = client.create_table(table)
+    table = client.create_table(table, timeout=30)
     print("Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id))
 
 def check_dataset_exist(dataset_id):
