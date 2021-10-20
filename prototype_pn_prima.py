@@ -13,6 +13,7 @@ if __name__ == "__main__":
 
     dataset_id = config["bq_config"]["dataset_id"]
     table_id = config["bq_config"]["table_id"]
+    log_file = config["log"]["log_file"]
 
     sh = gc.open("Prototype PN-PRIMA")
     wks = sh.sheet1
@@ -23,7 +24,7 @@ if __name__ == "__main__":
 
     if(len(raw_data) > 0):
 
-        with open("pn_prima_job.log", "r") as f:
+        with open(log_file, "r") as f:
             logs = f.readlines()
             last_inserted_timestamp = datetime.datetime.strptime(
                 logs[-1].split(",")[-1][25:].strip(), "%m/%d/%Y %X")

@@ -1,3 +1,6 @@
 bq_config:
   dataset_id: "experiment-328903.pn_prima_dataset"
   table_id: "experiment-328903.pn_prima_dataset.pn_prima_table"
+
+log:
+  log_file: "pn_prima_job.log"
