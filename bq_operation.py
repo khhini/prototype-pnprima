@@ -2,6 +2,7 @@ from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
 from google.oauth2 import service_account
 import time
+import yaml
 
 key_path="credentials.json"
 
@@ -84,9 +85,9 @@ def insert_to_table(dataset_id, table_id, data_to_insert):
     print("\n")
 
     if errors == []:
-        print("{} New rows have been added.".format(len(data_to_insert)))
+        return ["INFO", "{} New rows have been added.".format(len(data_to_insert))]
     else:
-        print("Encountered errors while inserting rows: {}".format(errors))
+        return ["INFO", "Encountered errors while inserting rows: {}".format(errors)]
 
 def delete_table(table_id):
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
@@ -94,6 +95,10 @@ def delete_table(table_id):
     client.delete_table(table_id, not_found_ok=True)
     print("Delete table '{}'",format(table_id))
 
-if __name__ == "__main__":
-    table_id = "experiment-328903.np_prima_dataset.np_prima_table"
-    create_table(table_id)
+# if __name__ == "__main__":
+#     with open("config.yaml", "r") as f:
+#         config = yaml.load(f, Loader=yaml.FullLoader)
+#     dataset_id = config["bq_config"]["dataset_id"]
+#     table_id = config["bq_config"]["table_id"]
+#     delete_table(table_id)
+#     create_table(table_id)

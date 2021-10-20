@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from faker import Faker
 import datetime
 import pygsheets
+import time
 
 
 ### Generate Data Dummy
@@ -31,6 +32,7 @@ claim_jenis_kelamin = np.random.choice(jenis_kelamin, n_names)
 
 dummy = []
 for i in range(n_names):
+    time.sleep(1)
     dummy.append([datetime.datetime.now().strftime("%m/%d/%Y %X"), nama_kader[i], id_pasien[i], nama_pasien[i], claim_jenis_penyakit[i], claim_kondisi[i], random.randint(10,60), claim_jenis_kelamin[i]])
 
 
