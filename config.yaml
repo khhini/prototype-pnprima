@@ -1,6 +1,53 @@
+gsheet_config:
+  file_name : "Prototype PN-PRIMA v2"
+
 bq_config:
   dataset_id: "experiment-328903.pn_prima_dataset"
-  table_id: "experiment-328903.pn_prima_dataset.pn_prima_table"
+  table_id: "experiment-328903.pn_prima_dataset.pn_prima_v2_table"
+  table_field:
+    - field_name : "timestamp"
+      type : "TIMESTAMP"
+      mode : "REQUIRED"
+
+    - field_name : "nama_kader"
+      type : "STRING"
+      mode : "REQUIRED"
+
+    - field_name : "id"
+      type : "STRING"
+      mode : "REQUIRED"
+    
+    - field_name : "nama_pasien"
+      type : "STRING"
+      mode : "REQUIRED"
+    
+    - field_name : "usia_pasien"
+      type : "INTEGER"
+      mode : "REQUIRED"
+    
+    - field_name : "jenis_kelamin_pasien"
+      type : "STRING"
+      mode : "REQUIRED"
+
+    - field_name : "jenis_report"
+      type : "STRING"
+      mode : "REQUIRED"
+    
+    - field_name : "jenis_gejala_covid"
+      type : "STRING"
+      mode : "NULLABLE"
+
+    - field_name : "kondisi_gejala_covid"
+      type : "STRING"
+      mode : "NULLABLE"
+    
+    - field_name : "jenis_penyakit"
+      type : "STRING"
+      mode : "NULLABLE"
+    
+    - field_name : "kondisi_penyakit"
+      type : "STRING"
+      mode : "NULLABLE"
 
 log:
   log_file: "pn_prima_job.log"

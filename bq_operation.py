@@ -20,23 +20,17 @@ def create_dataset(dataset_id):
     dataset = client.create_dataset(dataset, timeout=30)
     print("Created dataset {}.{}".format(client.project, dataset.dataset_id))
 
-def create_table(table_id):
+def create_table(table_id, table_field):
     print("Creating table {}".format(table_id))
 
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
     table = bigquery.Table(table_id)
 
-    schema = [
-        bigquery.SchemaField("timestamp","TIMESTAMP",mode="REQUIRED"),
-        bigquery.SchemaField("nama_kader","STRING", mode="REQUIRED"),
-        bigquery.SchemaField("id","STRING", mode="REQUIRED"),
-        bigquery.SchemaField("nama_pasien","STRING", mode="REQUIRED"),
-        bigquery.SchemaField("jenis_penyakit","STRING", mode="REQUIRED"),
-        bigquery.SchemaField("kondisi","STRING", mode="REQUIRED"),
-        bigquery.SchemaField("usia_pasien","INTEGER", mode="REQUIRED"),
-        bigquery.SchemaField("jenis_kelamin","STRING", mode="REQUIRED"),
-      ]
-      
+    schema = []
+    
+    for x in (table_field):
+        schema.append(bigquery.SchemaField(x["field_name"], x["type"], mode=x["mode"]))
+
     table = bigquery.Table(table_id, schema=schema)
     table = client.create_table(table, timeout=30)
     print("Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id))
@@ -87,7 +81,7 @@ def insert_to_table(dataset_id, table_id, data_to_insert):
     if errors == []:
         return ["INFO", "{} New rows have been added.".format(len(data_to_insert))]
     else:
-        return ["INFO", "Encountered errors while inserting rows: {}".format(errors)]
+        return ["ERROR", "Encountered errors while inserting rows: {}".format(errors)]
 
 def delete_table(table_id):
     client = bigquery.Client(credentials=credentials, project=credentials.project_id)
@@ -100,5 +94,8 @@ def delete_table(table_id):
 #         config = yaml.load(f, Loader=yaml.FullLoader)
 #     dataset_id = config["bq_config"]["dataset_id"]
 #     table_id = config["bq_config"]["table_id"]
+#     table_field = config["bq_config"]["table_field"]
 #     delete_table(table_id)
-#     create_table(table_id)
+#     create_table(table_id, table_field)
+    
+    
